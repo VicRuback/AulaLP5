@@ -5,22 +5,29 @@
 package tools;
 
 import javax.swing.JComponent;
-
+import javax.swing.JTextField;
 
 /**
  *
  * @author u86117213573
  */
 public class Util {
-    public static void habilitar (JComponent ... componentes){
+    public static void habilitar(JComponent... componentes) {
         for (int i = 0; i < componentes.length; i++) {
             componentes[i].setEnabled(true);
         }
     }
 
-    public static void desabilitar (JComponent ... componentes){
+    public static void desabilitar(JComponent... componentes) {
         for (int i = 0; i < componentes.length; i++) {
             componentes[i].setEnabled(false);
         }
     }
+
+    public static void Limpar(JTextField... componentes) {
+        for (int i = 0; i < componentes.length; i++) {
+            componentes[i].setText("");
+        }
+    }
 }
+
