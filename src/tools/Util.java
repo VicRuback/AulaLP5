@@ -26,7 +26,8 @@ public class Util {
 
     public static void Limpar(JTextField... componentes) {
         for (int i = 0; i < componentes.length; i++) {
-            componentes[i].setText("");
+            //instaceof
+           (  (JTextField) componentes[i]).setText("");
         }
     }
 }
