@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package view;
+import bean.Usuarios;
+import dao.UsuarioDAO;
 import tools.Util;
+
 
 
 
@@ -28,7 +31,37 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         
 
     }
-    
+    public Usuarios viewBean(){
+    Usuarios usuarios = new Usuarios();
+    int codigo = Util.strToInt(jTxtCodigo.getText());
+        usuarios.setNome(jTxtNome.getText());
+        usuarios.setApelido(jTxtApelido.getText());
+        usuarios.setCpf(jFmtCpf.getText());
+        usuarios.setDataNascimento(Util.strDate(jFmtDataDeNascimento.getText()));
+        usuarios.setSenha(jPwfSenha.getText());
+        usuarios.setNivel(jCboNivel.getSelectedIndex());
+        if (jChbAtivo.isSelected()== true){
+            usuarios.setAtivo("S");
+        } else {
+            usuarios.setAtivo("N");
+        }
+        
+        return usuarios;
+    }
+    public void beanView(Usuarios usuarios){
+   jTxtCodigo.setText(Util.intToStr(usuarios.getIdusuarios()));
+   jTxtNome.setText(usuarios.getNome());
+   jTxtApelido.setText(usuarios.getApelido());
+   jFmtCpf.setText(usuarios.getCpf());
+   jFmtDataDeNascimento.setText(Util.dateToStr(usuarios.getDataNascimento()));
+   jPwfSenha.setText(usuarios.getSenha());
+   jCboNivel.setSelectedIndex(usuarios.getNivel());
+    if (usuarios.getAtivo().equals("S")== true){
+        jChbAtivo.setSelected(true);
+    } else {
+        jChbAtivo.setSelected(false);
+    }
+    }
 
 
     /**
@@ -254,6 +287,9 @@ public class JDlgUsuarios extends javax.swing.JDialog {
                 jFmtCpf, jFmtDataDeNascimento, jPwfSenha, 
                 jCboNivel, jChbAtivo,jBtnConfirmar, jBtnCancelar);
               Util.habilitar(false, jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
+              Util.Limpar(jTxtCodigo, jTxtNome, jTxtApelido, 
+                jFmtCpf, jFmtDataDeNascimento, jPwfSenha, 
+                jCboNivel, jChbAtivo);
         
         
 
@@ -271,12 +307,25 @@ public class JDlgUsuarios extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         // TODO add your handling code here:
-        Util.perguntar("Deseja excluir o registro");
+       if( Util.perguntar("Deseja excluir o registro")== true){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.insert (viewBean());
+       }
+       Util.Limpar(jTxtCodigo, jTxtNome, jTxtApelido, 
+                jFmtCpf, jFmtDataDeNascimento, jPwfSenha, 
+                jCboNivel, jChbAtivo);
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         // TODO add your handling code here:
+        //Usuarios usuarios = viewBean();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.insert (viewBean());
+         Util.habilitar( false, jTxtCodigo, jTxtNome, jTxtApelido, 
+                jFmtCpf, jFmtDataDeNascimento, jPwfSenha, 
+                jCboNivel, jChbAtivo,jBtnConfirmar, jBtnCancelar);
+              Util.habilitar(true,  jBtnIncluir, jBtnAlterar, jBtnExcluir, jBtnPesquisar);
  
 
 
@@ -284,7 +333,10 @@ public class JDlgUsuarios extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         // TODO add your handling code here: 
-       Util.mensagem("Não implementado");
+       JDlgUsuariosPesquisar jDlgUsuariosPesquisar = new JDlgUsuariosPesquisar(null, true);
+       jDlgUsuariosPesquisar.setVisible(true);
+       jDlgUsuariosPesquisar.setTelaAnterior(this);
+               
 
     }//GEN-LAST:event_jBtnPesquisarActionPerformed
 

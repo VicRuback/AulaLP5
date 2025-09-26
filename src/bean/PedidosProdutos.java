@@ -2,7 +2,7 @@ package bean;
 // Generated 15/09/2025 07:58:38 by Hibernate Tools 4.3.1
 
 
-import java.math.double;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
